@@ -1,1 +1,1 @@
-# Quizmatic
+# Splitwiz
