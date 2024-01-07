@@ -6,7 +6,8 @@ import {
   Collapse,
   Popconfirm,
   message,
-  Divider
+  Divider,
+  Spin
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -292,7 +293,7 @@ const Event = () => {
   };
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div><Spin spinning={spinning} fullscreen /></div>;
   }
 
   return (
