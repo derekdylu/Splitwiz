@@ -5,7 +5,14 @@ app.use(express.json()); // For parsing application/json
 require('dotenv').config();
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3000/*', ''], // or an array of valid origins
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:3000/*', 
+    'https://how2split.netlify.app', 
+    'https://how2split.netlify.app/*', 
+    'how2split.derekdylu.com',
+    'how2split.derekdylu.com/*',
+  ], // or an array of valid origins
   optionsSuccessStatus: 200
 };
 
