@@ -16,7 +16,7 @@ const EditEntry = (props) => {
   const [entryName, setEntryName] = useState(props.data.name)
   const [entryValue, setEntryValue] = useState(props.data.value)
   const [shares, setShares] = useState(Object.values(props.data.shares))
-  const [checkedList, setCheckedList] = useState(props.accounts)
+  const [checkedList, setCheckedList] = useState(Object.keys(props.data.shares.filter(shares => shares > 0)))
   const [valueRadio, setValueRadio] = useState(props.data.method)
   const [payer, setPayer] = useState(props.data.payer)
   const [entryValueError, setEntryValueError] = useState(false)
@@ -161,7 +161,7 @@ const EditEntry = (props) => {
         dataSource={checkedList}
         renderItem={(item, i) => (
           <List.Item>
-            {item} 分擔 {shares[i]} 元
+            {item} 分擔 {shares[i] || 0} 元
             {
               valueRadio === 2 && <Input placeholder="指定金額" status={sharesError[i] && "error"} onChange={(e) => {
                 updateShareValue(e, i)

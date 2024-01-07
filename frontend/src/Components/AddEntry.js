@@ -160,7 +160,7 @@ const AddEntry = (props) => {
         dataSource={checkedList}
         renderItem={(item, i) => (
           <List.Item>
-            {item} 分擔 {shares[i]} 元
+            {item} 分擔 {shares[i] || 0} 元
             {
               valueRadio === 2 && <Input placeholder="指定金額" status={sharesError[i] && "error"} onChange={(e) => {
                 updateShareValue(e, i)
