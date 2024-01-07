@@ -386,7 +386,7 @@ const Event = () => {
                     renderItem={(member) => (
                       <List.Item>
                         <div className='flex flex-row w-full items-center justify-start'>
-                          {member} 分攤 {item.shares[member]} 元
+                          {member} 分攤 {item.shares[member] || 0} 元
                         </div>
                       </List.Item>
                     )}
