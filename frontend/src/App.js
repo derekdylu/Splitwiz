@@ -24,6 +24,15 @@ function App() {
     <div className="App">
       <Helmet>
         <title>How2split</title>
+        <meta name="description" content="How2split 是一款極輕量化線上帳目分攤工具，無需下載應用程式、無需註冊帳號，只要建立活動然後記住並分享連結，即可立即開始使用。" />
+        <link rel="canonical" href="https://how2split.derekdylu.com/" />
+        <meta name="theme-color" content="#40a9ff" />
+        <meta property="og:title" content="How2split" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://how2split.derekdylu.com/" />
+        <meta property="og:image" content="http://www.yourawesomesite.com/og.jpg" />
+        <meta property="og:description" content="How2split 是一款極輕量化線上帳目分攤工具，無需下載應用程式、無需註冊帳號，只要建立活動然後記住並分享連結，即可立即開始使用。" />
+        <meta property="og:site_name" content="How2split" />
       </Helmet>
       <Header openModal={handleOpenAboutModal} />
       {
