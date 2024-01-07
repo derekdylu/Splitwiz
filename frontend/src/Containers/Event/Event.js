@@ -82,8 +82,6 @@ const Event = () => {
 
     fetchEvent().catch(console.error);
     fetchData().catch(console.error);
-
-    console.log(id)
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const reload = async () => {
@@ -181,7 +179,7 @@ const Event = () => {
       receiver: receiver
     }
     try {
-      const response = await fetch(serverUrl, {
+      const response = await fetch(`${serverUrl}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
