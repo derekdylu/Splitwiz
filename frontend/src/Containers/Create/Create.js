@@ -14,8 +14,8 @@ const Create = () => {
   const [inputMember, setInputMember] = useState("")
   const [members, setMembers] = useState([])
   const [messageApi, contextHolder] = message.useMessage();
-  const [locked, setLocked] = useState(false)
-  const [password, setPassword] = useState("")
+  const [locked, setLocked] = useState(false) // eslint-disable-line
+  const [password, setPassword] = useState("") // eslint-disable-line
 
   const error = () => {
     messageApi.open({
