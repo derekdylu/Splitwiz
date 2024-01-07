@@ -285,7 +285,7 @@ const Event = () => {
     try {
       // Use the Clipboard API to copy the text
       await navigator.clipboard.writeText(linkToCopy);
-      message.success('共享連結已複製。');
+      message.success('共享連結已複製');
     } catch (err) {
       console.error('Failed to copy: ', err); // Handle any errors
     }
