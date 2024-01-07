@@ -293,7 +293,7 @@ const Event = () => {
   };
 
   if (!data) {
-    return <div><Spin spinning={spinning} fullscreen /></div>;
+    return <div><Spin spinning={true} fullscreen /></div>;
   }
 
   return (
