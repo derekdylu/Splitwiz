@@ -28,7 +28,7 @@ const AddEntry = (props) => {
   const onChangeRadio = (e) => {
     setValueRadio(e.target.value);
     e.target.value === 1 ?
-      setShares(props.accounts.map(a => entryValue / checkedList.length))
+      setShares(props.accounts.map(account => checkedList.includes(account) ? entryValue / checkedList.length : 0)) // problem
       :
       setShares(props.accounts.map(a => 0))
   };
@@ -36,7 +36,7 @@ const AddEntry = (props) => {
   const onChangeCheck = (list) => {
     setCheckedList(list);
     if (valueRadio === 1) {
-      setShares(list.map(a => entryValue / list.length))
+      setShares(props.accounts.map(account => list.includes(account) ? entryValue / list.length : 0)) // problem
     }
   };
 
@@ -57,7 +57,7 @@ const AddEntry = (props) => {
     }
     setEntryValue(e.target.value)
     if (valueRadio === 1) {
-      setShares(props.accounts.map(a => e.target.value / checkedList.length))
+      setShares(props.accounts.map(account => checkedList.includes(account) ? e.target.value / checkedList.length : 0)) // problem
     }
   }
 
