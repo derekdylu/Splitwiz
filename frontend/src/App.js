@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <title>React App</title>
+        <title>How2split</title>
       </Helmet>
       <Header openModal={handleOpenAboutModal} />
       {
