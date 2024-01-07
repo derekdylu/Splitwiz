@@ -91,6 +91,7 @@ const Event = () => {
       
       if (response.status === 404) {
         setData([]);
+        settle([]);
         return;
       }
   
