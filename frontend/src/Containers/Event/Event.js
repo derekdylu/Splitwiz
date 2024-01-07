@@ -82,6 +82,8 @@ const Event = () => {
 
     fetchEvent().catch(console.error);
     fetchData().catch(console.error);
+
+    console.log(id)
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const reload = async () => {
@@ -150,9 +152,7 @@ const Event = () => {
 
   const confirmDelete = async (id) => {
     try {
-      const url = `${serverUrl}/transactions/${id}`;
-  
-      const response = await fetch(url, {
+      const response = await fetch(`${serverUrl}/transactions/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -369,7 +369,7 @@ const Event = () => {
                   <Popconfirm
                     title="刪除帳目"
                     description="確定要刪除此筆帳目？"
-                    onConfirm={confirmDelete}
+                    onConfirm={() => confirmDelete(item._id)}
                     okText="刪除"
                     okType="danger"
                     cancelText="取消"
