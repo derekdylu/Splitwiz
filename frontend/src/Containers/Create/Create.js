@@ -6,6 +6,7 @@ import {
   List,
   message,
 } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
@@ -86,7 +87,7 @@ const Create = () => {
           bordered
           dataSource={members}
           renderItem={(member) => (
-            <List.Item actions={[<Button danger onClick={() => removeMember(member)}>刪除</Button>]}>
+            <List.Item actions={[<Button danger icon={<DeleteOutlined />} onClick={() => removeMember(member)}>刪除</Button>]}>
               {member}
             </List.Item>
           )}

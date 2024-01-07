@@ -16,7 +16,7 @@ const EditEntry = (props) => {
   const [entryName, setEntryName] = useState(props.data.name)
   const [entryValue, setEntryValue] = useState(props.data.value)
   const [shares, setShares] = useState(Object.values(props.data.shares))
-  const [checkedList, setCheckedList] = useState(Object.keys(props.data.shares.filter(shares => shares > 0)))
+  const [checkedList, setCheckedList] = useState(Object.keys(props.data.shares).filter(key => props.data.shares[key] > 0))
   const [valueRadio, setValueRadio] = useState(props.data.method)
   const [payer, setPayer] = useState(props.data.payer)
   const [entryValueError, setEntryValueError] = useState(false)
