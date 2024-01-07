@@ -181,9 +181,7 @@ const Event = () => {
       receiver: receiver
     }
     try {
-      const url = '${serverUrl}/transactions';
-  
-      const response = await fetch(url, {
+      const response = await fetch(serverUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
