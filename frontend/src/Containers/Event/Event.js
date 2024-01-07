@@ -104,11 +104,11 @@ const Event = () => {
       if (!result || result.length === 0) {
         console.log('No transactions found.');
         setData([]);
+        settle([]);
       } else {
         setData(result.sort((a, b) => b.timestamp - a.timestamp));
+        settle(result);
       }
-
-      settle(result)
     } catch (error) {
       console.error('Fetch error:', error);
     }
@@ -164,7 +164,7 @@ const Event = () => {
       }
 
       message.error('已經刪除帳目');
-      await reload()
+      reload()
     } catch (error) {
       console.error('Error deleting transaction:', error);
     }
