@@ -15,3 +15,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* CustomStyles.css */
+.ant-btn-primary {
+  background-color: #1890ff !important; /* Ant Design primary color */
+  color: #fff !important; /* White text */
+  border-color: #1890ff !important; /* Matching border */
+}
+
+.ant-btn-primary:focus,
+.ant-btn-primary:hover {
+  background-color: #40a9ff !important; /* Slightly lighter on hover/focus */
+  border-color: #40a9ff !important;
+}
+
+.ant-btn-primary:active {
+  background-color: #096dd9 !important; /* Active color */
+  border-color: #096dd9 !important;
+}
+
+.ant-btn-primary:disabled {
+  background-color: #d9d9d9 !important; /* Disabled color */
+  border-color: #d9d9d9 !important;
+  color: rgba(0, 0, 0, 0.25) !important; /* Disabled text color */
+}

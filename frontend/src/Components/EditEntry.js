@@ -12,13 +12,13 @@ const CheckboxGroup = Checkbox.Group;
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
-const AddEntry = (props) => {
-  const [entryName, setEntryName] = useState("")
-  const [entryValue, setEntryValue] = useState(0)
-  const [shares, setShares] = useState(props.accounts.map(a => 0))
+const EditEntry = (props) => {
+  const [entryName, setEntryName] = useState(props.data.name)
+  const [entryValue, setEntryValue] = useState(props.data.value)
+  const [shares, setShares] = useState(Object.values(props.data.shares))
   const [checkedList, setCheckedList] = useState(props.accounts)
-  const [valueRadio, setValueRadio] = useState(1)
-  const [payer, setPayer] = useState("")
+  const [valueRadio, setValueRadio] = useState(props.data.method)
+  const [payer, setPayer] = useState(props.data.payer)
   const [entryValueError, setEntryValueError] = useState(false)
   const [sharesError, setSharesError] = useState(props.accounts.map(x => false))
 
@@ -97,7 +97,7 @@ const AddEntry = (props) => {
   const submitEntry = async () => {
     const transactionData = {
       eventId: props.id,
-      timestamp: Date.now(),
+      // timestamp: Date.now(),
       type: "expense",
       value: Number(entryValue),
       payer: payer,
@@ -107,12 +107,12 @@ const AddEntry = (props) => {
       shares: convertShares(props.accounts, shares)
     };
     try {
-      const response = await fetch(`${serverUrl}/transactions`, {
-        method: 'POST',
+      const response = await fetch(`${serverUrl}/transactions/${props.transactionId}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(transactionData)
+        body: JSON.stringify(transactionData),
       });
   
       if (!response.ok) {
@@ -122,7 +122,7 @@ const AddEntry = (props) => {
       props.confirmMessage()
       props.closeModal()
     } catch (error) {
-      console.error('Error posting transaction:', error);
+      console.error('Error updating transaction:', error);
       props.closeModal()
     }
   }
@@ -130,13 +130,14 @@ const AddEntry = (props) => {
   return (
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
     <div className="flex flex-col px-4 gap-2 items-center">
-      <div className="font-bold">新增支出</div>
-      帳目 <Input placeholder="帳目名稱" onChange={(e) => setEntryName(e.target.value)}/>
-      金額 <Input status={entryValueError && "error"} placeholder="帳目金額" onChange={(e) => updateEntryValue(e)}/>
+      <div className="font-bold">編輯支出</div>
+      帳目 <Input placeholder="帳目名稱" value={entryName} onChange={(e) => setEntryName(e.target.value)}/>
+      金額 <Input status={entryValueError && "error"} placeholder="帳目金額" value={entryValue} onChange={(e) => updateEntryValue(e)}/>
       付款人
       <Select
         placeholder="付款人"
         style={{ width: 120 }}
+        value={payer}
         onChange={handleChangeSelect}
         options={props.accounts.map(a => ({value: a, label: a}))}
       />
@@ -176,10 +177,10 @@ const AddEntry = (props) => {
         </div>
       }
       </div>
-      <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>新增支出</Button>
+      <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>儲存</Button>
     </div>
     </Modal>
   )
 }
 
-export default AddEntry
+export default EditEntry
