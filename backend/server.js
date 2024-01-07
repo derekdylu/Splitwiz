@@ -10,8 +10,8 @@ const corsOptions = {
     'http://localhost:3000/*', 
     'https://how2split.netlify.app', 
     'https://how2split.netlify.app/*', 
-    'how2split.derekdylu.com',
-    'how2split.derekdylu.com/*',
+    'https://how2split.derekdylu.com',
+    'https://how2split.derekdylu.com/*',
   ], // or an array of valid origins
   optionsSuccessStatus: 200
 };
