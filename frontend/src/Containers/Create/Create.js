@@ -10,6 +10,7 @@ import {
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
 const Create = () => {
+  const [loading, setLoading] = useState([]);
   const [inputEvent, setInputEvent] = useState("")
   const [inputMember, setInputMember] = useState("")
   const [members, setMembers] = useState([])
@@ -59,8 +60,8 @@ const Create = () => {
     }
   }
 
-  const submitEvent = async (e) => {
-    e.preventDefault();
+  const submitEvent = async () => {
+    setLoading(true);
     const eventData = {
       name: inputEvent,
       accounts: members,
@@ -68,6 +69,7 @@ const Create = () => {
       password: password
     }
     await postEvent(eventData)
+    setLoading(false);
   }
 
   return (
@@ -96,7 +98,12 @@ const Create = () => {
         {
           locked && <Input.Password placeholder="設定密碼" value={password} onChange={(e) => setPassword(e.target.value)}/>
         } */}
-        <Button disabled={!inputEvent || members.length === 0 || (locked && password === "")} onClick={(e) => submitEvent(e)}>建立活動</Button>
+        {
+          loading ?
+          <Button loading>建立活動</Button>
+          :
+          <Button disabled={!inputEvent || members.length === 0 || (locked && password === "")} onClick={() => submitEvent()}>建立活動</Button>
+        }
       </Space>
     </>
   )
