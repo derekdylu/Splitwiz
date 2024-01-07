@@ -87,7 +87,7 @@ const Create = () => {
           bordered
           dataSource={members}
           renderItem={(member) => (
-            <List.Item actions={[<Button danger icon={<DeleteOutlined />} onClick={() => removeMember(member)}>刪除</Button>]}>
+            <List.Item actions={[<Button danger icon={<DeleteOutlined />} onClick={() => removeMember(member)} />]}>
               {member}
             </List.Item>
           )}
