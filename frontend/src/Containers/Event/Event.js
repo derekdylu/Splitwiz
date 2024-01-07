@@ -164,7 +164,7 @@ const Event = () => {
       }
 
       message.error('已經刪除帳目');
-      reload()
+      await reload()
     } catch (error) {
       console.error('Error deleting transaction:', error);
     }
