@@ -13,6 +13,7 @@ const EditTrans = (props) => {
   const [payer, setPayer] = useState(props.data.payer)
   const [receiver, setReceiver] = useState(props.data.receiver)
   const [entryValueError, setEntryValueError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const updateEntryValue = (e) => {
     // check if the value is number
@@ -38,6 +39,7 @@ const EditTrans = (props) => {
   }
 
   const submitEntry = async () => {
+    setLoading(true)
     const transactionData = {
       eventId: props.id,
       // timestamp: Date.now(),
@@ -89,7 +91,12 @@ const EditTrans = (props) => {
         options={props.accounts.map(a => ({value: a, label: a}))}
       />
       <div className="flex flex-col w-full mt-2 items-center">
+      {
+        loading ?
+        <Button loading>儲存</Button>
+        :
         <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>儲存</Button>
+      }
       </div>
     </div>
     </Modal>

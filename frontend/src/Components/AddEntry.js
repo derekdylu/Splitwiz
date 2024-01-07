@@ -21,6 +21,7 @@ const AddEntry = (props) => {
   const [payer, setPayer] = useState("")
   const [entryValueError, setEntryValueError] = useState(false)
   const [sharesError, setSharesError] = useState(props.accounts.map(x => false))
+  const [loading, setLoading] = useState(false)
 
   const checkAll = props.accounts.length === checkedList.length;
   const indeterminate = checkedList.length > 0 && checkedList.length < props.accounts.length;
@@ -95,6 +96,7 @@ const AddEntry = (props) => {
   }
 
   const submitEntry = async () => {
+    setLoading(true);
     const transactionData = {
       eventId: props.id,
       timestamp: Date.now(),
@@ -176,7 +178,12 @@ const AddEntry = (props) => {
         </div>
       }
       </div>
-      <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>新增支出</Button>
+      {
+        loading ?
+        <Button loading>新增支出</Button>
+        :
+        <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>新增支出</Button>
+      }
     </div>
     </Modal>
   )

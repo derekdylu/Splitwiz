@@ -58,6 +58,7 @@ const Create = () => {
       window.location.href = `/events/${data._id}`
     } catch (error) {
       console.error("Could not post event:", error);
+      setLoading(false);
     }
   }
 
@@ -70,13 +71,12 @@ const Create = () => {
       password: password
     }
     await postEvent(eventData)
-    setLoading(false);
   }
 
   return (
     <>
       {contextHolder}
-      <Space direction='vertical'>
+      <Space direction='vertical' size="middle">
         建立活動
         <Input placeholder="活動名稱" onChange={(e) => setInputEvent(e.target.value)}/>
         <Space wrap>
@@ -92,6 +92,9 @@ const Create = () => {
             </List.Item>
           )}
         />
+        <div className="text-xs text-gray-700">
+          *活動建立後即無法修改成員*
+        </div>
         {/* <Space warp>
             密碼保護
           <Switch defaultChecked checked={locked} onChange={() => setLocked(!locked)} />

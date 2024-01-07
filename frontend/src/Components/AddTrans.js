@@ -13,6 +13,7 @@ const AddTrans = (props) => {
   const [payer, setPayer] = useState("")
   const [receiver, setReceiver] = useState("")
   const [entryValueError, setEntryValueError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const updateEntryValue = (e) => {
     // check if the value is number
@@ -38,6 +39,7 @@ const AddTrans = (props) => {
   }
 
   const submitEntry = async () => {
+    setLoading(true)
     const transactionData = {
       eventId: props.id,
       timestamp: Date.now(),
@@ -87,7 +89,12 @@ const AddTrans = (props) => {
         options={props.accounts.map(a => ({value: a, label: a}))}
       />
       <div className="flex flex-col w-full mt-2 items-center">
+      {
+        loading ?
+        <Button loading>新增轉帳</Button>
+        :
         <Button type="primary" disabled={!checkValidity()} onClick={() => submitEntry()}>新增轉帳</Button>
+      }
       </div>
     </div>
     </Modal>
