@@ -10,7 +10,7 @@ import {
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
 const Create = () => {
-  const [loading, setLoading] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [inputEvent, setInputEvent] = useState("")
   const [inputMember, setInputMember] = useState("")
   const [members, setMembers] = useState([])
