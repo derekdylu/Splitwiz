@@ -33,6 +33,8 @@ const Event = () => {
   const [showSettle, setShowSettle] = useState(false)
   const [settleData, setSettleData] = useState([])
 
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -268,6 +270,7 @@ const Event = () => {
   }
 
   const settle = (transactions) => {
+    setLoading(true)
     setSettleData([])
     if (transactions.length <= 0) return;
 
@@ -276,6 +279,7 @@ const Event = () => {
 
     // Simplify the transactions
     setSettleData(minimizeTransactions(netBalances));
+    setLoading(false)
   }
 
   const copyToClipboard = async () => {
@@ -290,7 +294,19 @@ const Event = () => {
 
   const round = (num) => {
     return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
-  };
+  }
+  
+  const renderTime = (time) => {
+    const date = new Date(time);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    return year + '/' + month + '/' + day + ', ' + hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+  }
 
   if (!data) {
     return <div><Spin spinning={true} fullscreen /></div>;
@@ -316,7 +332,12 @@ const Event = () => {
         <Button onClick={() => copyToClipboard()}>共享連結</Button>
         <Button onClick={() => setOpenEntryModal(true)}>新增支出</Button>
         <Button onClick={() => setOpenTransModal(true)}>新增轉帳</Button>
-        <Button type="primary" onClick={() => {settle(data); setShowSettle(true);}}>結算</Button>
+        {
+          loading ?
+          <Button type="primary" loading>結算</Button>
+          :
+          <Button type="primary" onClick={() => {settle(data); setShowSettle(true);}}>結算</Button>
+        }
         </div>
       </div>
       <div className="flex flex-col w-full px-2 md:px-12 lg:px-24 xl:px-48">
@@ -347,7 +368,7 @@ const Event = () => {
             )}
           />
           :
-          <div>無結算需要</div>
+          <div className="pb-4">無需結算🎉</div>
         }
         <Button type="text" onClick={() => setShowSettle(false)}>隱藏結算</Button>
         </div>
@@ -390,6 +411,9 @@ const Event = () => {
                       </List.Item>
                     )}
                   />
+                  <div className="flex flex-row w-full justify-end pt-1 text-xs text-gray-700">
+                    {renderTime(item.timestamp)}
+                  </div>
                 </Collapse.Panel>
               </Collapse>
             </div>
