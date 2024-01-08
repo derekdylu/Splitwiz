@@ -313,7 +313,7 @@ const Event = () => {
       <div className="flex flex-col gap-4 pb-4">
         <div className="font-bold">{eventName}</div>
         <div className="flex flex-row justify-center gap-2">
-        <Button onClick={() => copyToClipboard()}>共享</Button>
+        <Button onClick={() => copyToClipboard()}>共享連結</Button>
         <Button onClick={() => setOpenEntryModal(true)}>新增支出</Button>
         <Button onClick={() => setOpenTransModal(true)}>新增轉帳</Button>
         <Button type="primary" onClick={() => {settle(data); setShowSettle(true);}}>結算</Button>
