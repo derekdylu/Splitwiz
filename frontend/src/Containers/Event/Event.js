@@ -71,7 +71,6 @@ const Event = () => {
         const result = await response.json();
     
         if (!result || result.length === 0) {
-          console.log('No transactions found.');
           setData([]);
         } else {
           setData(result.sort((a, b) => b.timestamp - a.timestamp));
