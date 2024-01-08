@@ -102,13 +102,11 @@ const Event = () => {
       const result = await response.json();
   
       if (!result || result.length === 0) {
-        console.log('No transactions found.');
         setData([]);
-        settle([]);
       } else {
         setData(result.sort((a, b) => b.timestamp - a.timestamp));
-        settle(result);
       }
+      settle(result);
     } catch (error) {
       console.error('Fetch error:', error);
     }
@@ -271,9 +269,8 @@ const Event = () => {
   }
 
   const settle = (transactions) => {
-    if (transactions.length <= 0) return;
-
     setSettleData([])
+    if (transactions.length <= 0) return;
 
     // Process the transactions and get the net balances
     const netBalances = processTransactions(transactions);
@@ -285,12 +282,15 @@ const Event = () => {
   const copyToClipboard = async () => {
     const linkToCopy = `https://how2split.derekdylu.com/events/${id}`
     try {
-      // Use the Clipboard API to copy the text
       await navigator.clipboard.writeText(linkToCopy);
       message.success('共享連結已複製');
     } catch (err) {
-      console.error('Failed to copy: ', err); // Handle any errors
+      console.error('Failed to copy: ', err);
     }
+  };
+
+  const round = (num) => {
+    return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
   };
 
   if (!data) {
@@ -332,7 +332,7 @@ const Event = () => {
             renderItem={(item) => (
               <List.Item>
                 <div className='flex flex-row w-full items-center justify-between'>
-                {item.debtor} 應付 {item.creditor} {item.settledAmount} 元
+                {item.debtor} 應付 {item.creditor} {round(item.settledAmount)} 元
                 <Popconfirm
                   title="確認轉帳"
                   description="確認新增此筆轉帳以結清欠款？"
@@ -363,7 +363,7 @@ const Event = () => {
             item.type === "expense" &&
             <div className="flex flex-col w-full">
               <div className="flex flex-row w-full justify-between items-center pb-2">
-                {item.name} 由 {item.payer} 先付 {item.value} 元
+                {item.name} 由 {item.payer} 先付 {round(item.value)} 元
                 <div className="flex flex-row gap-1">
                   <Button icon={<EditOutlined />} onClick={() => handleOpenEntryEditModal(i)} />
                   <Popconfirm
@@ -386,7 +386,7 @@ const Event = () => {
                     renderItem={(member) => (
                       <List.Item>
                         <div className='flex flex-row w-full items-center justify-start'>
-                          {member} 分攤 {item.shares[member] || 0} 元
+                          {member} 分攤 {round(item.shares[member]) || 0} 元
                         </div>
                       </List.Item>
                     )}
@@ -398,7 +398,7 @@ const Event = () => {
           {
             item.type === "transfer" &&
             <div className="flex flex-row w-full justify-between items-center py-1">
-              {item.payer} 轉 {item.value} 元給 {item.receiver}
+              {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
               <div className="flex flex-row gap-1">
               <Button icon={<EditOutlined />} onClick={() => handleOpenTransEditModal(i)} />
                 <Popconfirm

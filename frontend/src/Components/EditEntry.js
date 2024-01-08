@@ -128,6 +128,10 @@ const EditEntry = (props) => {
       props.closeModal()
     }
   }
+
+  const round = (num) => {
+    return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
+  };
   
   return (
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
@@ -163,7 +167,7 @@ const EditEntry = (props) => {
         dataSource={props.accounts}
         renderItem={(item, i) => (
           <List.Item>
-            {item} 分擔 {shares[i] || 0} 元
+            {item} 分擔 {round(shares[i]) || 0} 元
             {
               valueRadio === 2 && <Input placeholder="指定金額" status={sharesError[i] && "error"} onChange={(e) => {
                 updateShareValue(e, i)
