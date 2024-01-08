@@ -36,7 +36,9 @@ const EditEntry = (props) => {
 
   const onChangeCheck = (list) => {
     setCheckedList(list);
+    console.log("list", list)
     if (valueRadio === 1) {
+      console.log("entry value", entryValue)
       setShares(list.map(a => entryValue / list.length))
     }
   };
@@ -130,6 +132,7 @@ const EditEntry = (props) => {
   }
 
   const round = (num) => {
+    if (isNaN(num)) return;
     return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
   };
   
