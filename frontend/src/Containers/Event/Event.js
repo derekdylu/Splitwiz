@@ -293,7 +293,11 @@ const Event = () => {
   };
 
   const round = (num) => {
-    return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
+    if (num === null) { 
+      return 0
+    } else {
+      return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
+    }
   }
   
   const renderTime = (time) => {

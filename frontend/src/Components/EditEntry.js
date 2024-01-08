@@ -29,17 +29,15 @@ const EditEntry = (props) => {
   const onChangeRadio = (e) => {
     setValueRadio(e.target.value);
     e.target.value === 1 ?
-      setShares(props.accounts.map(a => entryValue / checkedList.length))
-      :
-      setShares(props.accounts.map(a => 0))
+    setShares(props.accounts.map(account => checkedList.includes(account) ? entryValue / checkedList.length : 0)) // problem
+    :
+    setShares(props.accounts.map(a => 0))
   };
 
   const onChangeCheck = (list) => {
     setCheckedList(list);
-    console.log("list", list)
     if (valueRadio === 1) {
-      console.log("entry value", entryValue)
-      setShares(list.map(a => entryValue / list.length))
+      setShares(props.accounts.map(account => list.includes(account) ? entryValue / list.length : 0)) // problem
     }
   };
 
@@ -60,7 +58,7 @@ const EditEntry = (props) => {
     }
     setEntryValue(e.target.value)
     if (valueRadio === 1) {
-      setShares(props.accounts.map(a => e.target.value / checkedList.length))
+      setShares(props.accounts.map(account => checkedList.includes(account) ? e.target.value / checkedList.length : 0)) // problem
     }
   }
 
@@ -132,8 +130,11 @@ const EditEntry = (props) => {
   }
 
   const round = (num) => {
-    if (isNaN(num)) return;
-    return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
+    if (num === null || num === undefined) { 
+      return 0
+    } else {
+      return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
+    }
   };
   
   return (
