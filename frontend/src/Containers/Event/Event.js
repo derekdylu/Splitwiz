@@ -272,7 +272,10 @@ const Event = () => {
   const settle = (transactions) => {
     setLoading(true)
     setSettleData([])
-    if (transactions.length <= 0) return;
+    if (transactions.length <= 0) {
+      setLoading(false)
+      return;
+    }
 
     // Process the transactions and get the net balances
     const netBalances = processTransactions(transactions);
