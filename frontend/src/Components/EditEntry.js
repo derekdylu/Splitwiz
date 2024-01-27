@@ -136,26 +136,47 @@ const EditEntry = (props) => {
       return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
     }
   };
+
+  const equallyDivideRemainder = () => {
+    const dividedRemainder = (entryValue - shares.filter(x => x > 0).reduce((a, b) => a + b, 0)) / shares.filter(x => x === 0).length
+    const newShares = [...shares]
+    newShares.forEach((share, i) => {
+      if (share === 0) {
+        newShares[i] = dividedRemainder
+      }
+    })
+    setShares(newShares)
+  }
   
   return (
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
-    <div className="flex flex-col px-4 gap-2 items-center">
+    <div className="flex flex-col px-4 gap-4 items-center">
       <div className="font-bold">編輯支出</div>
-      帳目 <Input placeholder="帳目名稱" value={entryName} onChange={(e) => setEntryName(e.target.value)}/>
-      金額 <Input status={entryValueError && "error"} placeholder="帳目金額" value={entryValue} onChange={(e) => updateEntryValue(e)}/>
-      付款人
-      <Select
-        placeholder="付款人"
-        style={{ width: 120 }}
-        value={payer}
-        onChange={handleChangeSelect}
-        options={props.accounts.map(a => ({value: a, label: a}))}
-      />
-      分攤方式
-      <Radio.Group onChange={onChangeRadio} value={valueRadio}>
-        <Radio value={1}>平均分攤</Radio>
-        <Radio value={2}>指定金額</Radio>
-      </Radio.Group>
+      <div className="flex flex-row items-center justify-between w-full">
+        帳目
+        <Input placeholder="帳目名稱" value={entryName} onChange={(e) => setEntryName(e.target.value)} style={{ width: 220 }}/>
+      </div>
+      <div className="flex flex-row items-center justify-between w-full">
+        金額
+        <Input status={entryValueError && "error"} placeholder="帳目金額" value={entryValue} onChange={(e) => updateEntryValue(e)} style={{ width: 220 }} />
+      </div>
+      <div className="flex flex-row items-center justify-between w-full">
+        付款人
+        <Select
+          placeholder="付款人"
+          style={{ width: 220 }}
+          value={payer}
+          onChange={handleChangeSelect}
+          options={props.accounts.map(a => ({value: a, label: a}))}
+        />
+      </div>
+      <div className="flex flex-row items-center justify-between w-full">
+        分攤方式
+        <Radio.Group onChange={onChangeRadio} value={valueRadio}>
+          <Radio value={1}>平均分攤</Radio>
+          <Radio value={2}>指定金額</Radio>
+        </Radio.Group>
+      </div>
       <div className="flex flex-col w-full gap-2 py-2">
       {
         valueRadio === 1 &&
@@ -182,7 +203,8 @@ const EditEntry = (props) => {
       />
       {
         valueRadio === 2 && 
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center gap-2">
+          <Button onClick={() => equallyDivideRemainder()} disabled={shares.filter(x => x === 0).length < 1}>平均分攤剩餘金額</Button>
           剩餘金額: {entryValue - shares.reduce((a, b) => a + b, 0)}
         </div>
       }

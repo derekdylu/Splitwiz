@@ -93,7 +93,7 @@ const Create = () => {
           )}
         />
         <div className="text-xs text-gray-700">
-          *活動建立後即無法修改成員*
+          *活動建立後即無法修改*
         </div>
         {/* <Space warp>
             密碼保護

@@ -71,23 +71,30 @@ const AddTrans = (props) => {
   
   return (
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
-    <div className="flex flex-col px-4 gap-2 items-center">
+    <div className="flex flex-col px-4 gap-4 items-center">
       <div className="font-bold">新增轉帳</div>
-      付款人
-      <Select
-        placeholder="付款人"
-        style={{ width: 120 }}
-        onChange={handleChangeSelectPayer}
-        options={props.accounts.map(a => ({value: a, label: a}))}
-      />
-      金額 <Input status={entryValueError && "error"} placeholder="帳目金額" onChange={(e) => updateEntryValue(e)}/>
-      收款人
-      <Select
-        placeholder="收款人"
-        style={{ width: 120 }}
-        onChange={handleChangeSelectReceiver}
-        options={props.accounts.map(a => ({value: a, label: a}))}
-      />
+      <div className="flex flex-row items-center justify-between w-full">
+        付款人
+        <Select
+          placeholder="付款人"
+          style={{ width: 220 }}
+          onChange={handleChangeSelectPayer}
+          options={props.accounts.map(a => ({value: a, label: a}))}
+        />
+      </div>
+      <div className="flex flex-row items-center justify-between w-full">
+        金額
+        <Input status={entryValueError && "error"} placeholder="帳目金額" onChange={(e) => updateEntryValue(e)}  style={{ width: 220 }}/>
+      </div>
+      <div className="flex flex-row items-center justify-between w-full">
+        收款人
+        <Select
+          placeholder="收款人"
+          style={{ width: 220 }}
+          onChange={handleChangeSelectReceiver}
+          options={props.accounts.map(a => ({value: a, label: a}))}
+        />
+      </div>
       <div className="flex flex-col w-full mt-2 items-center">
       {
         loading ?

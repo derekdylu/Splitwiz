@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { 
   List,
   Button,
-  Collapse,
   Popconfirm,
   message,
   Divider,
@@ -23,6 +22,7 @@ const Event = () => {
   const [eventName, setEventName] = useState("Loading...");
   const [accounts, setAccounts] = useState([]);
   const [data, setData] = useState(null);
+  const [openIndex, setOpenIndex] = useState(-1);
 
   const [openEntryModal, setOpenEntryModal] = useState(false)
   const [openEntryEditModal, setOpenEntryEditModal] = useState(false)
@@ -385,7 +385,7 @@ const Event = () => {
         bordered
         dataSource={data}
         renderItem={(item, i) => (
-          <List.Item>
+          <List.Item className="hover:bg-gray-50 rounded" onClick={() => {openIndex === i ? setOpenIndex(-1) : setOpenIndex(i)}}>
           {
             item.type === "expense" &&
             <div className="flex flex-col w-full">
@@ -405,8 +405,9 @@ const Event = () => {
                   </Popconfirm>
                 </div>
               </div>
-              <Collapse bordered={false}>
-                <Collapse.Panel header={item.method === 1 ? "平均分攤" : "指定金額"}>
+              {
+                openIndex === i &&
+                <div>
                   <List
                     bordered
                     dataSource={Object.keys(item.shares)}
@@ -418,15 +419,16 @@ const Event = () => {
                       </List.Item>
                     )}
                   />
-                  <div className="flex flex-row w-full justify-end pt-1 text-xs text-gray-700">
-                    {renderTime(item.timestamp)}
+                  <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
+                    {renderTime(item.timestamp)} - {item.method === 1 ? "平均分攤" : "指定金額"}
                   </div>
-                </Collapse.Panel>
-              </Collapse>
+                </div>
+              }
             </div>
           }
           {
             item.type === "transfer" &&
+            <div className="flex flex-col w-full">
             <div className="flex flex-row w-full justify-between items-center py-1">
               {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
               <div className="flex flex-row gap-1">
@@ -442,6 +444,15 @@ const Event = () => {
                   <Button danger icon={<DeleteOutlined />} />
                 </Popconfirm>
               </div>
+            </div>
+            {
+              openIndex === i &&
+              <div>
+                <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
+                  {renderTime(item.timestamp)}
+                </div>
+              </div>
+            }
             </div>
           }
           </List.Item>
