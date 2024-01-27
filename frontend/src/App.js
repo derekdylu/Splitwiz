@@ -9,6 +9,7 @@ import About from './Containers/About/About';
 
 import Header from './Components/Header';
 import Info from './Components/Info';
+import AdSense from './Components/AdSense';
 
 import './App.css';
 
@@ -48,6 +49,7 @@ function App() {
           {/* <Route path="/event" element={<Event />} /> */}
           <Route path="*" element={<Error />} />
         </Routes>
+        <AdSense />
       </Router>
     </div>
   );
