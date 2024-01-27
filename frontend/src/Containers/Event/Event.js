@@ -401,7 +401,7 @@ const Event = () => {
           {
             item.type === "expense" &&
             <div className="flex flex-col w-full">
-              <div className="flex flex-row w-full justify-between items-center pb-2 text-start">
+              <div className="flex flex-row w-full justify-between items-center text-start">
                 {item.name} 由 {item.payer} 先付 {round(item.value)} 元
                 <div className="flex flex-row gap-1">
                   <Button icon={<EditOutlined />} onClick={() => handleOpenEntryEditModal(i)} />
