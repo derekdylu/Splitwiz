@@ -84,7 +84,7 @@ const EditEntry = (props) => {
   };
 
   const checkValidity = () => {
-    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && (entryValue - shares.reduce((a, b) => a + b, 0) < 1 && entryValue - shares.reduce((a, b) => a + b, 0) > -1)))
+    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && (entryValue - shares.reduce((a, b) => a + b, 0) < 0.01 && entryValue - shares.reduce((a, b) => a + b, 0) > -0.01)))
   }
 
   function convertShares(accounts, shares) {
