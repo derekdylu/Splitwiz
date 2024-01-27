@@ -347,7 +347,7 @@ const Event = () => {
         }
         </div>
       </div>
-      <div className="flex flex-col w-full px-2 md:px-12 lg:px-24 xl:px-48">
+      <div className="flex flex-col w-full px-2 md:px-12 lg:px-24 xl:px-48 pb-12">
       {
         showSettle && 
         <div className="flex flex-col pt-2">
@@ -358,7 +358,7 @@ const Event = () => {
             dataSource={settleData}
             renderItem={(item) => (
               <List.Item>
-                <div className='flex flex-row w-full items-center justify-between'>
+                <div className='flex flex-row w-full items-center justify-between text-start'>
                 {item.debtor} 應付 {item.creditor} {round(item.settledAmount)} 元
                 <Popconfirm
                   title="確認轉帳"
@@ -389,7 +389,7 @@ const Event = () => {
           {
             item.type === "expense" &&
             <div className="flex flex-col w-full">
-              <div className="flex flex-row w-full justify-between items-center pb-2">
+              <div className="flex flex-row w-full justify-between items-center pb-2 text-start">
                 {item.name} 由 {item.payer} 先付 {round(item.value)} 元
                 <div className="flex flex-row gap-1">
                   <Button icon={<EditOutlined />} onClick={() => handleOpenEntryEditModal(i)} />
@@ -429,30 +429,30 @@ const Event = () => {
           {
             item.type === "transfer" &&
             <div className="flex flex-col w-full">
-            <div className="flex flex-row w-full justify-between items-center py-1">
-              {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
-              <div className="flex flex-row gap-1">
-              <Button icon={<EditOutlined />} onClick={() => handleOpenTransEditModal(i)} />
-                <Popconfirm
-                  title="刪除轉帳"
-                  description="確定要刪除此筆轉帳？"
-                  onConfirm={() => confirmDelete(item._id)}
-                  okText="刪除"
-                  okType="danger"
-                  cancelText="取消"
-                >
-                  <Button danger icon={<DeleteOutlined />} />
-                </Popconfirm>
-              </div>
-            </div>
-            {
-              openIndex === i &&
-              <div>
-                <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
-                  {renderTime(item.timestamp)}
+              <div className="flex flex-row w-full justify-between items-center py-1 text-start">
+                {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
+                <div className="flex flex-row gap-1">
+                <Button icon={<EditOutlined />} onClick={() => handleOpenTransEditModal(i)} />
+                  <Popconfirm
+                    title="刪除轉帳"
+                    description="確定要刪除此筆轉帳？"
+                    onConfirm={() => confirmDelete(item._id)}
+                    okText="刪除"
+                    okType="danger"
+                    cancelText="取消"
+                  >
+                    <Button danger icon={<DeleteOutlined />} />
+                  </Popconfirm>
                 </div>
               </div>
-            }
+              {
+                openIndex === i &&
+                <div>
+                  <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
+                    {renderTime(item.timestamp)}
+                  </div>
+                </div>
+              }
             </div>
           }
           </List.Item>
