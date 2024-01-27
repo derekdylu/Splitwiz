@@ -62,6 +62,10 @@ const AddEntry = (props) => {
     }
   }
 
+  const setAllToZero = () => {
+    setShares(props.accounts.map(a => 0))
+  }
+
   const updateShareValue = (e, i) => {
     // check if the value is number
     if (isNaN(e.target.value) || e.target.value < 0) {
@@ -84,7 +88,7 @@ const AddEntry = (props) => {
   };
 
   const checkValidity = () => {
-    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && entryValue - shares.reduce((a, b) => a + b, 0) === 0))
+    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && entryValue - shares.reduce((a, b) => a + b, 0) < 1))
   }
 
   function convertShares(accounts, shares) {
@@ -189,7 +193,7 @@ const AddEntry = (props) => {
           <List.Item>
             {item} 分擔 {round(shares[i]) || 0} 元
             {
-              valueRadio === 2 && <Input placeholder="指定新金額" status={sharesError[i] && "error"} onChange={(e) => {
+              valueRadio === 2 && <Input allowClear placeholder="指定新金額" status={sharesError[i] && "error"} onChange={(e) => {
                 updateShareValue(e, i)
               }}/>
             }
@@ -199,8 +203,11 @@ const AddEntry = (props) => {
       {
         valueRadio === 2 && 
         <div className="flex flex-col w-full items-center gap-2">
-          <Button onClick={() => equallyDivideRemainder()} disabled={shares.filter(x => x === 0).length < 1}>平均分攤剩餘金額</Button>
-          剩餘金額: {entryValue - shares.reduce((a, b) => a + b, 0)}
+          <div className="flex flex-row gap-2">
+            <Button onClick={() => setAllToZero()}>歸零</Button>
+            <Button onClick={() => equallyDivideRemainder()} disabled={shares.filter(x => x === 0).length < 1}>平均分攤剩餘金額</Button>
+          </div>
+          剩餘金額: {round(entryValue - shares.reduce((a, b) => a + b, 0))}
         </div>
       }
       </div>

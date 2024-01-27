@@ -14,6 +14,7 @@ import AddEntry from '../../Components/AddEntry'
 import EditEntry from '../../Components/EditEntry';
 import AddTrans from '../../Components/AddTrans';
 import EditTrans from '../../Components/EditTrans';
+import EditEvent from '../../Components/EditEvent';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
@@ -28,6 +29,7 @@ const Event = () => {
   const [openEntryEditModal, setOpenEntryEditModal] = useState(false)
   const [openTransModal, setOpenTransModal] = useState(false)
   const [openTransEditModal, setOpenTransEditModal] = useState(false)
+  const [openEventEditModal, setOpenEventEditModal] = useState(false)
 
   const [dataIndex, setDataIndex] = useState(-1)
   const [showSettle, setShowSettle] = useState(false)
@@ -111,6 +113,10 @@ const Event = () => {
     } catch (error) {
       console.error('Fetch error:', error);
     }
+  }
+
+  const handleCloseEventEditModal = () => {
+    setOpenEventEditModal(false)
   }
 
   const handleCloseEntryModal = () => {
@@ -322,6 +328,9 @@ const Event = () => {
   return (
     <>
       {
+        openEventEditModal && <EditEvent openModal={openEventEditModal} closeModal={handleCloseEventEditModal} confirmMessage={confirmEdited} data={{name: eventName, accounts: accounts}} id={id} />
+      }
+      {
         openEntryModal && <AddEntry openModal={openEntryModal} closeModal={handleCloseEntryModal} confirmMessage={confirmAdded} accounts={accounts} id={id} />
       }
       {
@@ -333,8 +342,11 @@ const Event = () => {
       {
         openTransEditModal && <EditTrans openModal={openTransEditModal} closeModal={handleCloseTransEditModel} confirmMessage={confirmTransEdit} data={data[dataIndex]} accounts={accounts} id={id} transactionId={data[dataIndex]._id} />
       }
-      <div className="flex flex-col gap-4 pb-4">
-        <div className="font-bold">{eventName}</div>
+      <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-row gap-2 items-center">
+          <div className="font-bold">{eventName}</div>
+          <Button icon={<EditOutlined />} onClick={() => setOpenEventEditModal(true)} />
+        </div>
         <div className="flex flex-row justify-center gap-2">
         <Button onClick={() => copyToClipboard()}>共享連結</Button>
         <Button onClick={() => setOpenEntryModal(true)}>新增支出</Button>
@@ -350,7 +362,7 @@ const Event = () => {
       <div className="flex flex-col w-full px-2 md:px-12 lg:px-24 xl:px-48 pb-12">
       {
         showSettle && 
-        <div className="flex flex-col pt-2">
+        <div className="flex flex-col pt-4">
         {
           settleData.length > 0 ?
           <List
@@ -375,7 +387,7 @@ const Event = () => {
             )}
           />
           :
-          <div className="pb-4">無需結算🎉</div>
+          <div className="pt-4">無需結算🎉</div>
         }
         <Button type="text" onClick={() => setShowSettle(false)}>隱藏結算</Button>
         </div>

@@ -92,9 +92,6 @@ const Create = () => {
             </List.Item>
           )}
         />
-        <div className="text-xs text-gray-700">
-          *活動建立後即無法修改*
-        </div>
         {/* <Space warp>
             密碼保護
           <Switch defaultChecked checked={locked} onChange={() => setLocked(!locked)} />
@@ -102,6 +99,9 @@ const Create = () => {
         {
           locked && <Input.Password placeholder="設定密碼" value={password} onChange={(e) => setPassword(e.target.value)}/>
         } */}
+        <div className="text-xs text-gray-700">
+          *活動建立後即無法刪除既有成員*
+        </div>
         {
           loading ?
           <Button loading>建立活動</Button>

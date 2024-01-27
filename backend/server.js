@@ -136,6 +136,20 @@ app.patch('/transactions/:id', (req, res) => {
     .catch(err => res.status(500).send('Server error'));
 });
 
+app.patch('/events/:id', (req, res) => {
+  const updates = req.body; // assuming the body contains the fields to update
+  const options = { new: true }; // to return the updated document
+
+  Event.findByIdAndUpdate(req.params.id, updates, options)
+    .then(event => {
+      if (!event) {
+        return res.status(404).send('Event not found.');
+      }
+      res.send(event);
+    })
+    .catch(err => res.status(500).send('Server error'));
+});
+
 app.delete('/transactions/:id', (req, res) => {
   Transaction.findByIdAndDelete(req.params.id)
     .then(transaction => {
