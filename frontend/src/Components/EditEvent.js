@@ -80,7 +80,7 @@ const EditEvent = (props) => {
     <div className="flex flex-col items-center gap-4">
       <div className="font-bold">編輯活動</div>
       <Input placeholder="活動名稱" value={eventName} onChange={(e) => setEventName(e.target.value)} style={{ width: 276}} />
-      <Space wrap>
+      <Space wrap style={{ width: 276 }}>
         <Input placeholder="成員名稱" value={inputMember} onChange={(e) => setInputMember(e.target.value)}/>
         <Button onClick={() => addMember()} disabled={!inputMember}>新增成員</Button>
       </Space>
