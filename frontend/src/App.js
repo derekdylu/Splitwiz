@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Create from './Containers/Create/Create';
 import Event from './Containers/Event/Event';
 import Error from './Containers/Error/Error';
+import About from './Containers/About/About';
 
 import Header from './Components/Header';
 import Info from './Components/Info';
@@ -42,6 +43,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Create />} />
+          <Route path="/about" element={<About />} />
           <Route path="/events/:id" element={<Event />} />
           {/* <Route path="/event" element={<Event />} /> */}
           <Route path="*" element={<Error />} />
