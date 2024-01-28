@@ -419,7 +419,7 @@ const Event = () => {
               </div>
               {
                 openIndex === i &&
-                <div>
+                <div className="pt-1">
                   <List
                     bordered
                     dataSource={Object.keys(item.shares)}

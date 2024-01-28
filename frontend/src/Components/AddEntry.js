@@ -10,7 +10,7 @@ import {
 } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
-const serverUrl = process.env.REACT_APP_SERVER_URL
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const AddEntry = (props) => {
   const [entryName, setEntryName] = useState("")
