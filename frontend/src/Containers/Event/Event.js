@@ -387,7 +387,7 @@ const Event = () => {
             )}
           />
           :
-          <div className="pt-4">無需結算🎉</div>
+          <div className="pt-4 pb-2">無需結算🎉</div>
         }
         <Button type="text" onClick={() => setShowSettle(false)}>隱藏結算</Button>
         </div>
@@ -419,7 +419,7 @@ const Event = () => {
               </div>
               {
                 openIndex === i &&
-                <div className="pt-1">
+                <div className="pt-2">
                   <List
                     bordered
                     dataSource={Object.keys(item.shares)}
