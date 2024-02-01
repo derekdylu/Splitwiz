@@ -84,7 +84,7 @@ const EditEntry = (props) => {
   };
 
   const checkValidity = () => {
-    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && (entryValue - shares.reduce((a, b) => a + b, 0) < 0.01 && entryValue - shares.reduce((a, b) => a + b, 0) > -0.01)))
+    return !entryValueError && entryName && entryValue && payer && ((valueRadio === 1 && checkedList.length > 0) || (valueRadio === 2 && entryValue - shares.reduce((a, b) => a + b, 0) === 0))
   }
 
   function convertShares(accounts, shares) {
@@ -136,21 +136,6 @@ const EditEntry = (props) => {
       return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
     }
   };
-
-  const setAllToZero = () => {
-    setShares(props.accounts.map(a => 0))
-  }
-
-  const equallyDivideRemainder = () => {
-    const dividedRemainder = (entryValue - shares.filter(x => x > 0).reduce((a, b) => a + b, 0)) / shares.filter(x => x === 0).length
-    const newShares = [...shares]
-    newShares.forEach((share, i) => {
-      if (share === 0) {
-        newShares[i] = dividedRemainder
-      }
-    })
-    setShares(newShares)
-  }
   
   return (
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
@@ -208,10 +193,6 @@ const EditEntry = (props) => {
       {
         valueRadio === 2 && 
         <div className="flex flex-col w-full items-center gap-2">
-          <div className="flex flex-row gap-2">
-            <Button onClick={() => setAllToZero()}>歸零</Button>
-            <Button onClick={() => equallyDivideRemainder()} disabled={shares.filter(x => x === 0).length < 1}>平均分攤剩餘金額</Button>
-          </div>
           剩餘金額: {round(entryValue - shares.reduce((a, b) => a + b, 0))}
         </div>
       }
