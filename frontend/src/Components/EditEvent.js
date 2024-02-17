@@ -79,7 +79,7 @@ const EditEvent = (props) => {
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
     <div className="flex flex-col items-center gap-4">
       <div className="font-bold">編輯活動</div>
-      <Input placeholder="活動名稱" value={eventName} onChange={(e) => setEventName(e.target.value)} style={{ width: 276}} />
+      <Input placeholder="活動名稱" value={eventName} onChange={(e) => setEventName(e.target.value)} />
       <Space wrap>
         <Input placeholder="成員名稱" value={inputMember} onChange={(e) => setInputMember(e.target.value)}/>
         <Button onClick={() => addMember()} disabled={!inputMember}>新增成員</Button>
@@ -87,7 +87,6 @@ const EditEvent = (props) => {
       <List
         bordered
         dataSource={eventAccounts}
-        style={{ width: 276}}
         renderItem={(member) => (
           <List.Item actions={[<Button disabled={originalAccounts.find(x => x === member)} danger icon={<DeleteOutlined />} onClick={() => removeMember(member)} />]}>
             {member}
