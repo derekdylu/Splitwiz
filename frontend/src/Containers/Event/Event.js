@@ -292,7 +292,7 @@ const Event = () => {
   }
 
   const copyToClipboard = async () => {
-    const linkToCopy = `https://how2split.derekdylu.com/events/${id}`
+    const linkToCopy = `https://how2split.com/events/${id}`
     try {
       await navigator.clipboard.writeText(linkToCopy);
       message.success('共享連結已複製');
