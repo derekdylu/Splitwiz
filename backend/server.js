@@ -12,6 +12,8 @@ const corsOptions = {
     'https://how2split.netlify.app/*', 
     'https://how2split.derekdylu.com',
     'https://how2split.derekdylu.com/*',
+    'https://how2split.online',
+    'https://how2split.online/*'
   ], // or an array of valid origins
   optionsSuccessStatus: 200
 };
