@@ -178,7 +178,7 @@ const AddEntry = (props) => {
           <List.Item>
             {item} 分擔 {round(shares[i]) || 0} 元
             {
-              valueRadio === 2 && <Input allowClear placeholder="指定新金額" status={sharesError[i] && "error"} onChange={(e) => {
+              valueRadio === 2 && <Input allowClear placeholder="指定金額" status={sharesError[i] && "error"} onChange={(e) => {
                 updateShareValue(e, i)
               }}/>
             }
