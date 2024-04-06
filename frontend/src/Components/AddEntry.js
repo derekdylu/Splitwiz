@@ -22,6 +22,7 @@ const AddEntry = (props) => {
   const [entryValueError, setEntryValueError] = useState(false)
   const [sharesError, setSharesError] = useState(props.accounts.map(x => false))
   const [loading, setLoading] = useState(false)
+  const [multiplePayer, setMultiplePayer] = useState(false)
 
   const checkAll = props.accounts.length === checkedList.length;
   const indeterminate = checkedList.length > 0 && checkedList.length < props.accounts.length;
@@ -137,6 +138,7 @@ const AddEntry = (props) => {
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
     <div className="flex flex-col px-4 gap-4 items-center">
       <div className="font-bold">新增支出</div>
+      <Checkbox disabled onChange={(e) => setMultiplePayer(e.target.checked)} checked={multiplePayer}>多人付款模式</Checkbox>
       <div className="flex flex-row items-center justify-between w-full">
         帳目
         <Input placeholder="帳目名稱" onChange={(e) => setEntryName(e.target.value)} style={{ width: 220 }}/>
@@ -147,12 +149,22 @@ const AddEntry = (props) => {
       </div>
       <div className="flex flex-row items-center justify-between w-full">
         付款人
-        <Select
-          placeholder="付款人"
-          style={{ width: 220 }}
-          onChange={handleChangeSelect}
-          options={props.accounts.map(a => ({value: a, label: a}))}
-        />
+        {
+          multiplePayer === true ?
+          <div className='flex flex-col w-full items-start'>
+            <Checkbox indeterminate={indeterminate} checked={checkAll}>
+              全選
+            </Checkbox>
+            <CheckboxGroup options={props.accounts} value={checkedList}/>
+          </div>
+          :
+          <Select
+            placeholder="付款人"
+            style={{ width: 220 }}
+            onChange={handleChangeSelect}
+            options={props.accounts.map(a => ({value: a, label: a}))}
+          />
+        }
       </div>
       <div className="flex flex-row items-center justify-between w-full">
         分攤方式

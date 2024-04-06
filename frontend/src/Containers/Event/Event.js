@@ -88,7 +88,7 @@ const Event = () => {
     fetchData().catch(console.error);
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const reload = async () => {
+  const reload = async (updatedEvent = false) => {
     try {
       const response = await fetch(`${serverUrl}/events/${id}/transactions`);
       
@@ -115,7 +115,10 @@ const Event = () => {
     }
   }
 
-  const handleCloseEventEditModal = () => {
+  const handleCloseEventEditModal = (changed) => {
+    if (changed) {
+      reload(true)
+    }
     setOpenEventEditModal(false)
   }
 
@@ -328,7 +331,7 @@ const Event = () => {
   return (
     <>
       {
-        openEventEditModal && <EditEvent openModal={openEventEditModal} closeModal={handleCloseEventEditModal} confirmMessage={confirmEdited} data={{name: eventName, accounts: accounts}} id={id} />
+        openEventEditModal && <EditEvent openModal={openEventEditModal} closeModal={handleCloseEventEditModal} data={{name: eventName, accounts: accounts}} id={id} />
       }
       {
         openEntryModal && <AddEntry openModal={openEntryModal} closeModal={handleCloseEntryModal} confirmMessage={confirmAdded} accounts={accounts} id={id} />
