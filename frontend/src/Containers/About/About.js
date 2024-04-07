@@ -15,6 +15,9 @@ const About = () => {
       <div>
         如果您願意支持我，可以透過 <u><a href="https://www.buymeacoffee.com/derekdylu" target="_blank" rel="noreferrer">Buy Me A Coffee</a></u> 贊助我，感謝您的支持！
       </div>
+      <div>
+        開發中功能：(1) 多人付款 (2) 操作記錄 (3) 私人加密活動 (4) 成員刪除與其債權歸屬 (5) English version (6) 帳目類別 (7) 統計資料與圖表 (8) 跨國幣別結算 (9) 自訂活動連結 (10) 活動刪除
+      </div>
     </div>
   )
 }

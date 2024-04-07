@@ -138,7 +138,7 @@ const AddEntry = (props) => {
     <Modal open={props.openModal} onCancel={props.closeModal} footer={null}>
     <div className="flex flex-col px-4 gap-4 items-center">
       <div className="font-bold">新增支出</div>
-      <Checkbox disabled onChange={(e) => setMultiplePayer(e.target.checked)} checked={multiplePayer}>多人付款模式</Checkbox>
+      {/* <Checkbox disabled onChange={(e) => setMultiplePayer(e.target.checked)} checked={multiplePayer}>多人付款模式</Checkbox> */}
       <div className="flex flex-row items-center justify-between w-full">
         帳目
         <Input placeholder="帳目名稱" onChange={(e) => setEntryName(e.target.value)} style={{ width: 220 }}/>
