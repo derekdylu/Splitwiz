@@ -149,22 +149,12 @@ const AddEntry = (props) => {
       </div>
       <div className="flex flex-row items-center justify-between w-full">
         付款人
-        {
-          multiplePayer === true ?
-          <div className='flex flex-col w-full items-start'>
-            <Checkbox indeterminate={indeterminate} checked={checkAll}>
-              全選
-            </Checkbox>
-            <CheckboxGroup options={props.accounts} value={checkedList}/>
-          </div>
-          :
-          <Select
-            placeholder="付款人"
-            style={{ width: 220 }}
-            onChange={handleChangeSelect}
-            options={props.accounts.map(a => ({value: a, label: a}))}
-          />
-        }
+        <Select
+          placeholder="付款人"
+          style={{ width: 220 }}
+          onChange={handleChangeSelect}
+          options={props.accounts.map(a => ({value: a, label: a}))}
+        />
       </div>
       <div className="flex flex-row items-center justify-between w-full">
         分攤方式
