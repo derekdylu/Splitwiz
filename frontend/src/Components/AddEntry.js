@@ -22,7 +22,7 @@ const AddEntry = (props) => {
   const [entryValueError, setEntryValueError] = useState(false)
   const [sharesError, setSharesError] = useState(props.accounts.map(x => false))
   const [loading, setLoading] = useState(false)
-  const [multiplePayer, setMultiplePayer] = useState(false)
+  // const [multiplePayer, setMultiplePayer] = useState(false)
 
   const checkAll = props.accounts.length === checkedList.length;
   const indeterminate = checkedList.length > 0 && checkedList.length < props.accounts.length;
