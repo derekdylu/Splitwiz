@@ -367,10 +367,10 @@ const Event = () => {
         showSettle && 
         <div className="flex flex-col pt-4">
         {
-          settleData.length > 0 ?
+          settleData.filter((x) => x >= 0.005).length > 0 ?
           <List
             bordered
-            dataSource={settleData}
+            dataSource={settleData.filter((x) => x >= 0.005)}
             renderItem={(item) => (
               <List.Item>
                 <div className='flex flex-row w-full items-center justify-between text-start'>
