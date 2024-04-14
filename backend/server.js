@@ -14,7 +14,7 @@ const corsOptions = {
     'https://how2split.derekdylu.com/*',
     'https://how2split.online',
     'https://how2split.online/*'
-  ], // or an array of valid origins
+  ],
   optionsSuccessStatus: 200
 };
 
@@ -22,8 +22,6 @@ app.use(cors());
 
 const mongoose = require('mongoose');
 
-// Replace 'your_database_url' with the actual database URL.
-// If running locally, it's typically mongodb://localhost:27017/yourdbname
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
@@ -98,7 +96,7 @@ app.post('/events', (req, res) => {
     name: req.body.name,
     accounts: req.body.accounts, // assuming this is an array of strings
     locked: req.body.locked,
-    password: req.body.password // remember to hash passwords in real applications
+    password: req.body.password
   });
 
   newEvent.save()
