@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Create from './Containers/Create/Create';
-import Event from './Containers/Event/Event';
+// import Create from './Containers/Create/Create';
+// import Event from './Containers/Event/Event';
 import Error from './Containers/Error/Error';
 import About from './Containers/About/About';
+import Down from './Containers/Down/Down';
 
 import Header from './Components/Header';
 import Info from './Components/Info';
@@ -13,7 +14,7 @@ import Info from './Components/Info';
 import './App.css';
 
 function App() {
-  const [openAboutModal,setOpenAboutModal] = useState(false);
+  const [openAboutModal, setOpenAboutModal] = useState(false);
   const handleOpenAboutModal = () => {
     setOpenAboutModal(true);
   }
@@ -42,10 +43,11 @@ function App() {
       }
       <Router>
         <Routes>
-          <Route path="/" element={<Create />} />
+          {/* <Route path="/" element={<Create />} /> */}
+          <Route path="/" element={<Down />} />
           <Route path="/about" element={<About />} />
-          <Route path="/events/:id" element={<Event />} />
-          {/* <Route path="/event" element={<Event />} /> */}
+          {/* <Route path="/events/:id" element={<Event />} /> */}
+          <Route path="/events/:id" element={<Down />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>
