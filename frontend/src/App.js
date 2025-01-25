@@ -27,12 +27,12 @@ function App() {
       <Helmet>
         <title>How2split</title>
         <meta name="description" content="How2split 是一款極輕量化線上帳目分攤工具，無需下載應用程式、無需註冊帳號，只要建立活動然後記住並分享連結，即可立即開始使用。" />
-        <link rel="canonical" href="https://how2split.online/" />
+        <link rel="canonical" href="https://how2split.netlify.app/" />
         <meta name="theme-color" content="#40a9ff" />
         <meta property="og:title" content="How2split" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://how2split.online/" />
-        <meta property="og:image" content="https://how2split.online/og.jpg" />
+        <meta property="og:url" content="https://how2split.netlify.app/" />
+        <meta property="og:image" content="https://how2split.netlify.app/og.jpg" />
         <meta property="og:description" content="How2split 是一款極輕量化線上帳目分攤工具，無需下載應用程式、無需註冊帳號，只要建立活動然後記住並分享連結，即可立即開始使用。" />
         <meta property="og:site_name" content="How2split" />
       </Helmet>

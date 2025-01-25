@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { 
+import {
   List,
   Button,
   Popconfirm,
@@ -41,13 +41,13 @@ const Event = () => {
     const fetchEvent = async () => {
       try {
         const response = await fetch(`${serverUrl}/events/${id}`);
-    
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-    
+
         const result = await response.json();
-    
+
         if (result.name && result.accounts) {
           setEventName(result.name);
           setAccounts(result.accounts);
@@ -62,18 +62,18 @@ const Event = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${serverUrl}/events/${id}/transactions`);
-        
+
         if (response.status === 404) {
           setData([]);
           return;
         }
-    
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const result = await response.json();
-    
+
         if (!result || result.length === 0) {
           setData([]);
         } else {
@@ -82,7 +82,7 @@ const Event = () => {
       } catch (error) {
         console.error('Fetch error:', error);
       }
-    };        
+    };
 
     fetchEvent().catch(console.error);
     fetchData().catch(console.error);
@@ -91,19 +91,19 @@ const Event = () => {
   const reload = async (updatedEvent = false) => {
     try {
       const response = await fetch(`${serverUrl}/events/${id}/transactions`);
-      
+
       if (response.status === 404) {
         setData([]);
         settle([]);
         return;
       }
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
-  
+
       if (!result || result.length === 0) {
         setData([]);
       } else {
@@ -166,7 +166,7 @@ const Event = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -176,7 +176,7 @@ const Event = () => {
     } catch (error) {
       console.error('Error deleting transaction:', error);
     }
-  
+
   };
 
   const confirmSettle = async (payer, receiver, entryValue) => {
@@ -196,7 +196,7 @@ const Event = () => {
         },
         body: JSON.stringify(transactionData)
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -206,7 +206,7 @@ const Event = () => {
     } catch (error) {
       console.error('Error posting transaction:', error);
     }
-    
+
   }
 
   const confirmTrans = () => {
@@ -221,7 +221,7 @@ const Event = () => {
 
   const processTransactions = (transactions) => {
     const balances = {};
-  
+
     transactions.forEach((transaction) => {
       if (transaction.type === "transfer") {
         // Update balances for direct transfers
@@ -234,35 +234,35 @@ const Event = () => {
         const totalValue = transaction.value;
         const payer = transaction.payer;
         const shares = transaction.shares;
-  
+
         // Deduct total expense from the payer
         balances[payer] = (balances[payer] || 0) + totalValue;
-  
+
         // Credit each participant's share
         for (const [person, share] of Object.entries(shares)) {
           balances[person] = (balances[person] || 0) - share;
         }
       }
     });
-  
+
     return balances;
   }
 
   const minimizeTransactions = (balances) => {
     const transactions = [];
     const keys = Object.keys(balances);
-  
+
     while (true) {
       // Find the person with the highest debt and the highest credit
       keys.sort((a, b) => balances[a] - balances[b]);
       const debtor = keys[0];
       const creditor = keys[keys.length - 1];
-  
+
       // If everyone is settled
       if (balances[debtor] >= 0 || balances[creditor] <= 0) {
         break;
       }
-  
+
       // The amount to be settled
       const settledAmount = Math.min(-balances[debtor], balances[creditor]);
       balances[debtor] += settledAmount;
@@ -274,7 +274,7 @@ const Event = () => {
       }
       transactions.push(transaction);
     }
-    
+
     return transactions;
   }
 
@@ -295,7 +295,7 @@ const Event = () => {
   }
 
   const copyToClipboard = async () => {
-    const linkToCopy = `https://how2split.online/events/${id}`
+    const linkToCopy = `https://how2split.netlify.app/events/${id}`
     try {
       await navigator.clipboard.writeText(linkToCopy);
       message.success('共享連結已複製');
@@ -305,13 +305,13 @@ const Event = () => {
   };
 
   const round = (num) => {
-    if (num === null) { 
+    if (num === null) {
       return 0
     } else {
       return (num.toString().split(".")[1]?.length > 2) ? num.toFixed(2) : num;
     }
   }
-  
+
   const renderTime = (time) => {
     const date = new Date(time);
 
@@ -331,7 +331,7 @@ const Event = () => {
   return (
     <>
       {
-        openEventEditModal && <EditEvent openModal={openEventEditModal} closeModal={handleCloseEventEditModal} data={{name: eventName, accounts: accounts}} id={id} />
+        openEventEditModal && <EditEvent openModal={openEventEditModal} closeModal={handleCloseEventEditModal} data={{ name: eventName, accounts: accounts }} id={id} />
       }
       {
         openEntryModal && <AddEntry openModal={openEntryModal} closeModal={handleCloseEntryModal} confirmMessage={confirmAdded} accounts={accounts} id={id} />
@@ -351,128 +351,128 @@ const Event = () => {
           <Button icon={<EditOutlined />} onClick={() => setOpenEventEditModal(true)} />
         </div>
         <div className="flex flex-row justify-center gap-2">
-        <Button onClick={() => copyToClipboard()}>共享連結</Button>
-        <Button onClick={() => setOpenEntryModal(true)}>新增支出</Button>
-        <Button onClick={() => setOpenTransModal(true)}>新增轉帳</Button>
-        {
-          loading ?
-          <Button type="primary" loading>結算</Button>
-          :
-          <Button type="primary" onClick={() => {settle(data); setShowSettle(true);}}>結算</Button>
-        }
+          <Button onClick={() => copyToClipboard()}>共享連結</Button>
+          <Button onClick={() => setOpenEntryModal(true)}>新增支出</Button>
+          <Button onClick={() => setOpenTransModal(true)}>新增轉帳</Button>
+          {
+            loading ?
+              <Button type="primary" loading>結算</Button>
+              :
+              <Button type="primary" onClick={() => { settle(data); setShowSettle(true); }}>結算</Button>
+          }
         </div>
       </div>
       <div className="flex flex-col w-full px-2 md:px-12 lg:px-24 xl:px-48 pb-12">
-      {
-        showSettle && 
-        <div className="flex flex-col pt-4">
         {
-          settleData.filter((item) => item.settledAmount >= 0.005).length > 0 ?
-          <List
-            bordered
-            dataSource={settleData.filter((item) => item.settledAmount >= 0.005)}
-            renderItem={(item) => (
-              <List.Item>
-                <div className='flex flex-row w-full items-center justify-between text-start'>
-                {item.debtor} 應付 {item.creditor} {round(item.settledAmount)} 元
-                <Popconfirm
-                  title="確認轉帳"
-                  description="確認新增此筆轉帳以結清欠款？"
-                  onConfirm={() => confirmSettle(item.debtor, item.creditor, item.settledAmount)}
-                  okText="確認"
-                  okType="danger"
-                  cancelText="取消"
-                >
-                  <Button>結清</Button>
-                </Popconfirm>
-                </div>
-              </List.Item>
-            )}
-          />
-          :
-          <div className="pt-4 pb-2">無需結算🎉</div>
+          showSettle &&
+          <div className="flex flex-col pt-4">
+            {
+              settleData.filter((item) => item.settledAmount >= 0.005).length > 0 ?
+                <List
+                  bordered
+                  dataSource={settleData.filter((item) => item.settledAmount >= 0.005)}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <div className='flex flex-row w-full items-center justify-between text-start'>
+                        {item.debtor} 應付 {item.creditor} {round(item.settledAmount)} 元
+                        <Popconfirm
+                          title="確認轉帳"
+                          description="確認新增此筆轉帳以結清欠款？"
+                          onConfirm={() => confirmSettle(item.debtor, item.creditor, item.settledAmount)}
+                          okText="確認"
+                          okType="danger"
+                          cancelText="取消"
+                        >
+                          <Button>結清</Button>
+                        </Popconfirm>
+                      </div>
+                    </List.Item>
+                  )}
+                />
+                :
+                <div className="pt-4 pb-2">無需結算🎉</div>
+            }
+            <Button type="text" onClick={() => setShowSettle(false)}>隱藏結算</Button>
+          </div>
         }
-        <Button type="text" onClick={() => setShowSettle(false)}>隱藏結算</Button>
-        </div>
-      }
-      <Divider />
-      <List
-        bordered
-        dataSource={data}
-        renderItem={(item, i) => (
-          <List.Item className="hover:bg-gray-50 rounded" onClick={() => {openIndex === i ? setOpenIndex(-1) : setOpenIndex(i)}}>
-          {
-            item.type === "expense" &&
-            <div className="flex flex-col w-full">
-              <div className="flex flex-row w-full justify-between items-center text-start">
-                {item.name} 由 {item.payer} 先付 {round(item.value)} 元
-                <div className="flex flex-row gap-1">
-                  <Button icon={<EditOutlined />} onClick={() => handleOpenEntryEditModal(i)} />
-                  <Popconfirm
-                    title="刪除帳目"
-                    description="確定要刪除此筆帳目？"
-                    onConfirm={() => confirmDelete(item._id)}
-                    okText="刪除"
-                    okType="danger"
-                    cancelText="取消"
-                  >
-                    <Button danger icon={<DeleteOutlined />} />
-                  </Popconfirm>
-                </div>
-              </div>
+        <Divider />
+        <List
+          bordered
+          dataSource={data}
+          renderItem={(item, i) => (
+            <List.Item className="hover:bg-gray-50 rounded" onClick={() => { openIndex === i ? setOpenIndex(-1) : setOpenIndex(i) }}>
               {
-                openIndex === i &&
-                <div className="pt-2">
-                  <List
-                    bordered
-                    dataSource={Object.keys(item.shares)}
-                    renderItem={(member) => (
-                      <List.Item>
-                        <div className='flex flex-row w-full items-center justify-start'>
-                          {member} 分攤 {round(item.shares[member]) || 0} 元
-                        </div>
-                      </List.Item>
-                    )}
-                  />
-                  <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
-                    {renderTime(item.timestamp)} - {item.method === 1 ? "平均分攤" : "指定金額"}
+                item.type === "expense" &&
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-row w-full justify-between items-center text-start">
+                    {item.name} 由 {item.payer} 先付 {round(item.value)} 元
+                    <div className="flex flex-row gap-1">
+                      <Button icon={<EditOutlined />} onClick={() => handleOpenEntryEditModal(i)} />
+                      <Popconfirm
+                        title="刪除帳目"
+                        description="確定要刪除此筆帳目？"
+                        onConfirm={() => confirmDelete(item._id)}
+                        okText="刪除"
+                        okType="danger"
+                        cancelText="取消"
+                      >
+                        <Button danger icon={<DeleteOutlined />} />
+                      </Popconfirm>
+                    </div>
                   </div>
+                  {
+                    openIndex === i &&
+                    <div className="pt-2">
+                      <List
+                        bordered
+                        dataSource={Object.keys(item.shares)}
+                        renderItem={(member) => (
+                          <List.Item>
+                            <div className='flex flex-row w-full items-center justify-start'>
+                              {member} 分攤 {round(item.shares[member]) || 0} 元
+                            </div>
+                          </List.Item>
+                        )}
+                      />
+                      <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
+                        {renderTime(item.timestamp)} - {item.method === 1 ? "平均分攤" : "指定金額"}
+                      </div>
+                    </div>
+                  }
                 </div>
               }
-            </div>
-          }
-          {
-            item.type === "transfer" &&
-            <div className="flex flex-col w-full">
-              <div className="flex flex-row w-full justify-between items-center py-1 text-start">
-                {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
-                <div className="flex flex-row gap-1">
-                <Button icon={<EditOutlined />} onClick={() => handleOpenTransEditModal(i)} />
-                  <Popconfirm
-                    title="刪除轉帳"
-                    description="確定要刪除此筆轉帳？"
-                    onConfirm={() => confirmDelete(item._id)}
-                    okText="刪除"
-                    okType="danger"
-                    cancelText="取消"
-                  >
-                    <Button danger icon={<DeleteOutlined />} />
-                  </Popconfirm>
-                </div>
-              </div>
               {
-                openIndex === i &&
-                <div>
-                  <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
-                    {renderTime(item.timestamp)}
+                item.type === "transfer" &&
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-row w-full justify-between items-center py-1 text-start">
+                    {item.payer} 轉 {round(item.value)} 元給 {item.receiver}
+                    <div className="flex flex-row gap-1">
+                      <Button icon={<EditOutlined />} onClick={() => handleOpenTransEditModal(i)} />
+                      <Popconfirm
+                        title="刪除轉帳"
+                        description="確定要刪除此筆轉帳？"
+                        onConfirm={() => confirmDelete(item._id)}
+                        okText="刪除"
+                        okType="danger"
+                        cancelText="取消"
+                      >
+                        <Button danger icon={<DeleteOutlined />} />
+                      </Popconfirm>
+                    </div>
                   </div>
+                  {
+                    openIndex === i &&
+                    <div>
+                      <div className="flex flex-row w-full justify-start pt-1 text-xs text-gray-700">
+                        {renderTime(item.timestamp)}
+                      </div>
+                    </div>
+                  }
                 </div>
               }
-            </div>
-          }
-          </List.Item>
-        )}
-      />
+            </List.Item>
+          )}
+        />
       </div>
     </>
   )
