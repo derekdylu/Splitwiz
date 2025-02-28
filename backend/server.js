@@ -6,14 +6,10 @@ require('dotenv').config();
 
 const corsOptions = {
   origin: [
-    'http://localhost:3000', 
-    'http://localhost:3000/*', 
-    'https://how2split.netlify.app', 
-    'https://how2split.netlify.app/*', 
-    'https://how2split.derekdylu.com',
-    'https://how2split.derekdylu.com/*',
-    'https://how2split.online',
-    'https://how2split.online/*'
+    'http://localhost:3000',
+    'http://localhost:3000/*',
+    'https://how2split.netlify.app',
+    'https://how2split.netlify.app/*',
   ],
   optionsSuccessStatus: 200
 };
@@ -22,6 +18,7 @@ app.use(cors());
 
 const mongoose = require('mongoose');
 
+// environment variable in the backend server platform
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
